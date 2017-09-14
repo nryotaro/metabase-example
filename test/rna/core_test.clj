@@ -1,4 +1,4 @@
-(ns dna.core-test
+(ns rna.core-test
   (:require [clojure.test :refer :all]
             [dna.core :refer :all]))
 

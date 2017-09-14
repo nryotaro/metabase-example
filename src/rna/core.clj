@@ -1,4 +1,4 @@
-(ns dna.core
+(ns rna.core
   (:require [abracad.avro :as avro]))
 
 
