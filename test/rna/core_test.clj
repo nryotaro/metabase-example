@@ -1,7 +1,11 @@
 (ns rna.core-test
   (:require [clojure.test :refer :all]
-            [dna.core :refer :all]))
+            [clj-time.coerce :as timec]            
+            [rna.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+
+(deftest to-date-test
+  (testing "Return published date of the specified news"
+    (is (= (get-date {:publication-date 1463702400000})
+           (timec/from-long 1463702400000)))))
+
