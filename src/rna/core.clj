@@ -19,30 +19,42 @@
   [dir-path]
   (filter #(. % isFile) (-> dir-path io/file file-seq)))
 
-
-#_(defn to-date)
-
 (defmulti get-date #(->> % :publication-date type))
 
 (defmethod get-date Long
   [news]
-  #_(timef/unparse (timef/formatters :basic-date-time)
-                 (->> news :publication-date timec/from-long))  
   (->> news :publication-date timec/from-long))
+
+(def date-formatter (timef/formatter "yyyy/MM/dd"))
 
 (defmethod get-date :default
   [news]
   (throw (RuntimeException. news)))
 
-(comment 
-  (defn store-news
-    [news root-dir]
-    (let [date (get-date news)
-          news-id (:an news)
-          dest-path (build-dest-path root-dir date news-id)]
-      (-> dest-path fs/parent fs/mkdirs)
-      (scheshire/generate-stream news
-                                 (clojure.java.io/writer dest-path)
-                                 {:pretty true}))))
+
+(defn create-dest-path
+  [root-dir date news-id]
+  (. (io/file root-dir
+              (timef/unparse date-formatter date)
+              (str news-id ".json"))
+     getPath))
+
+(defn store-news
+  [news root-dir]
+  (let [date (get-date news)
+        news-id (:an news)
+        dest-path (create-dest-path root-dir date news-id)]
+    (-> dest-path fs/parent fs/mkdirs)
+    (spit dest-path
+          (cheshire/generate-string
+           news
+           {:pretty true}))))
+
+(defn deserialize-news
+  [src-dir dest-dir]
+  (doall
+   (for [avro (list-files src-dir)
+         news (deserialize avro)]
+     (store-news news dest-dir))))
 
 (stest/instrument)
