@@ -7,5 +7,6 @@
                  [com.damballa/abracad "0.4.13"]
                  [me.raynes/fs "1.4.6"]
                  [clj-time "0.14.0"]
-                 [cheshire "5.8.0"]]
+                 [cheshire "5.8.0"]
+                 [http-kit "2.2.0"]]
   :profiles {:dev {:resource-paths ["dev-resources"]}})

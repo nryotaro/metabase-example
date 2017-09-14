@@ -1,12 +1,15 @@
 (ns rna.core
   (:require [abracad.avro :as avro]
+            [clojure.edn :as edn]
             [clojure.spec.alpha :as s]
             [me.raynes.fs :as fs]
+            [org.httpkit.client :as http]
             [cheshire.core :as cheshire]
             [clojure.spec.test.alpha :as stest]
             [clj-time.format :as timef]
             [clj-time.coerce :as timec]
             [clojure.java.io :as io]))
+
 
 (defn deserialize
   [file-path]
