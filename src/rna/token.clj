@@ -1,5 +1,6 @@
 (ns rna.token
   (:require [org.httpkit.client :as http]
+            [clojure.spec.alpha :as s]            
             [cheshire.core :as cheshire]
             [rna.url :as url]))
 
@@ -18,10 +19,6 @@
         {:keys [id_token access_token]} (cheshire/parse-string body true)]
     {:id-token id_token
      :access-token access_token}))
-
-
-;(println (issue-token rna.credential/credential))
-
 
 (defn issue-jwt-token
   [id-token client-id]
@@ -44,6 +41,3 @@
         jwt-token
         (issue-jwt-token id-token client-id)]
     {:id-token id-token :access-token access-token :jwt-token jwt-token}))
-
-(println (generate-token
-          rna.credential/credential))

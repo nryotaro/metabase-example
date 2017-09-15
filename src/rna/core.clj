@@ -10,7 +10,6 @@
             [clj-time.coerce :as timec]
             [clojure.java.io :as io]))
 
-
 (defn deserialize
   [file-path]
   (with-open [adf (avro/data-file-reader file-path)]
@@ -34,7 +33,6 @@
   [news]
   (throw (RuntimeException. news)))
 
-
 (defn create-dest-path
   [root-dir date news-id]
   (. (io/file root-dir
@@ -52,6 +50,8 @@
           (cheshire/generate-string
            news
            {:pretty true}))))
+
+
 
 (defn deserialize-news
   [src-dir dest-dir]
