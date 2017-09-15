@@ -8,7 +8,7 @@
     (is (= (flat {:code "c"
                   :descriptor "desc"
                   :code_status {:is_active true :is_visible false}})
-           [["c" "desc" true false]])))
+           [["c" "desc" true false "NONE"]])))
   (testing "flat2"
     (is (= (flat {:code "c"
                   :descriptor "desc"
@@ -19,9 +19,9 @@
                                {:code "c22"
                                 :descriptor "desc22"
                                 :code_status {:is_active true :is_visible false}}]})
-           [["c" "desc" true false]
-            ["c2" "desc2" true false]
-            ["c22" "desc22" true false]]))))
+           [["c" "desc" true false "NONE"]
+            ["c2" "desc2" true false "c"]
+            ["c22" "desc22" true false "c"]]))))
 
 (deftest industries-test
   (testing "flat-map"
