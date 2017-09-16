@@ -6,11 +6,11 @@
   ([industry parent_code]
    (let [{:keys [code descriptor code_status industries]} industry
          {:keys [is_active is_visible]} code_status
-         line [[code descriptor is_active is_visible parent_code]]]
+         line [[code parent_code descriptor is_active is_visible]]]
      (if industries
        (into line (reduce #(into %1 %2) (map #(flat % code) industries)))
        line)))
-  ([industry] (flat industry "NONE")))
+  ([industry] (flat industry "")))
 
 (defn chain-idsts
   [industries]
@@ -21,6 +21,6 @@
   (with-open [writer (io/writer dest-path)]
     (csv/write-csv
      writer
-     (into [["code" "descriptor" "active" "visible" "parent_code"]]
+     (into [["code" "parent_code" "descriptor" "active" "visible"]]
            (chain-idsts industries)))))
  
