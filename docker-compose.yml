@@ -1,0 +1,28 @@
+services:
+  metbase:
+    container_name: metabase
+    image: metabase/metabase:v0.47.8
+    # ports:
+      # - 3000:3000
+    network_mode: host      
+    environment:
+      MB_DB_TYPE: mysql
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 3307
+      MB_DB_USER: metabase
+      MB_DB_PASS: metabase
+      MB_DB_HOST: 127.0.0.1
+    depends_on:
+      - mysql
+    extra_hosts:
+      kazusa: "127.0.0.1"
+  mysql:
+    container_name: mysql
+    build:
+      context: ./db
+    # ports:
+      # - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 3307      
+    network_mode: host
